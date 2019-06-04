@@ -26,7 +26,7 @@
             <TextView
                     android:id="@+id/name"
                     android:layout_width="0dp"
-                    android:layout_margin="16dp"
+                    android:padding="10dp"
                     android:textSize="16sp"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
@@ -37,24 +37,30 @@
             <TextView
                     android:id="@+id/phone"
                     android:layout_width="0dp"
-                    android:layout_margin="16dp"
+                    android:padding="10dp"
                     android:textSize="16sp"
+                    android:autoLink="phone"
+                    android:drawableStart="@android:drawable/ic_menu_call"
+                    android:drawablePadding="10dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/name"
                     app:layout_constraintLeft_toRightOf="@+id/guideline"
                     app:layout_constraintRight_toRightOf="parent"
-                    tools:text="Phone number"/>
+                    tools:text="+380597009458"/>
 
             <TextView
                     android:id="@+id/email"
                     android:layout_width="0dp"
-                    android:layout_margin="16dp"
+                    android:padding="10dp"
                     android:textSize="16sp"
+                    android:autoLink="email"
+                    android:drawableStart="@android:drawable/ic_menu_send"
+                    android:drawablePadding="10dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/phone"
                     app:layout_constraintLeft_toRightOf="@+id/guideline"
                     app:layout_constraintRight_toRightOf="parent"
-                    tools:text="Email"/>
+                    tools:text="Email@gmail.com"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
