@@ -1,4 +1,4 @@
-package com.tictracapp.ui.utils
+package com.tictracapp.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

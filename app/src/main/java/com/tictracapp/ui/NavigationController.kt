@@ -2,8 +2,9 @@ package com.tictracapp.ui
 
 import com.tictracapp.data.model.User
 import com.tictracapp.ui.fragment.DetailsFragment
+import com.tictracapp.ui.fragment.ImagePreviewFragment
 import com.tictracapp.ui.fragment.MainFragment
-import com.tictracapp.ui.utils.FragmentUtils
+import com.tictracapp.utils.FragmentUtils
 import com.tictracappTest.R
 import javax.inject.Inject
 
@@ -24,10 +25,10 @@ class NavigationController() {
     }
 
     fun navigateToDetails(user: User){
-        FragmentUtils.openContentFragment(fragmentManager, DetailsFragment.newInstance(user), containerId, true, DetailsFragment::class.java.name, haveTransition = false)
+        FragmentUtils.openContentFragment(fragmentManager, DetailsFragment.newInstance(user), containerId, true, DetailsFragment::class.java.name, haveTransition = true)
     }
 
     fun navigateToGallery(url: String){
-//        FragmentUtils.openContentFragment(fragmentManager, DetailsFragment.newInstance(user), containerId, true, DetailsFragment::class.java.name, haveTransition = false)
+        FragmentUtils.openContentFragment(fragmentManager, ImagePreviewFragment.newInstance(url), containerId, true, ImagePreviewFragment::class.java.name, haveTransition = true)
     }
 }

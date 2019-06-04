@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import com.tictracappTest.R
 
-
 object IntentUtils {
 
     private const val PHONE_INTENT = "tel:"

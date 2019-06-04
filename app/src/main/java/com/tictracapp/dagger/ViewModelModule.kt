@@ -2,6 +2,7 @@ package com.tictracapp.dagger
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.tictracapp.viewModel.ImagePreviewViewModel
 import com.tictracapp.viewModel.MainViewModel
 import com.tictracapp.viewModel.UserDetailsViewModel
 import dagger.Binds
@@ -20,6 +21,11 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(UserDetailsViewModel::class)
     internal abstract fun bindUserDetailsViewModel(viewModel: UserDetailsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ImagePreviewViewModel::class)
+    internal abstract fun bindImagePreviewViewModel(viewModel: ImagePreviewViewModel): ViewModel
 
     @Binds
     internal abstract fun bindViewModelFactory(factory: TicTrackViewModelFactory): ViewModelProvider.Factory
