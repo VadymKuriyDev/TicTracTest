@@ -14,4 +14,6 @@ class ImagePreviewViewModel @Inject constructor(): ViewModel() {
     }
 
     fun getObservableUserData(): LiveData<String> = logoLiveData
+
+    fun getLogo(): String? = logoLiveData.value
 }

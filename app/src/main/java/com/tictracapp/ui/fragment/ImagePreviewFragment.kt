@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.tictracapp.dagger.Injectable
-import com.tictracapp.ui.NavigationController
 import com.tictracapp.viewModel.ImagePreviewViewModel
 import com.tictracappTest.R
 import com.tictracappTest.databinding.ImagePreviewGalleryBinding
@@ -19,8 +18,6 @@ import javax.inject.Inject
 
 class ImagePreviewFragment : Fragment(), Injectable {
 
-    @Inject
-    lateinit var navigationMainController: NavigationController
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: ImagePreviewViewModel
@@ -34,21 +31,30 @@ class ImagePreviewFragment : Fragment(), Injectable {
             binding = it
         }.root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initViewModel()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(LOGO, viewModel.getLogo())
     }
 
-    private fun initViewModel(){
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (savedInstanceState != null) {
+            savedInstanceState.getString(LOGO)
+        } else {
+            arguments?.getString(LOGO)
+        }?.apply {
+            initViewModel(this)
+        }
+    }
+
+    private fun initViewModel(logo: String){
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(ImagePreviewViewModel::class.java)
         viewModel.getObservableUserData().observe(viewLifecycleOwner,
             Observer<String> { data ->
                 fillView(data)
             })
-        arguments?.getString(LOGO)?.also{
-            viewModel.loadData(it)
-        }
+        viewModel.loadData(logo)
     }
 
     private fun fillView(logo: String?){

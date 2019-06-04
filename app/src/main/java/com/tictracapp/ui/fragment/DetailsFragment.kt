@@ -38,21 +38,30 @@ class DetailsFragment : Fragment(), Injectable {
             binding = it
         }.root
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initViewModel()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(USER, viewModel.getUserData())
     }
 
-    private fun initViewModel(){
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (savedInstanceState != null) {
+            savedInstanceState.getParcelable<User>(USER)
+        } else {
+            arguments?.getParcelable(USER)
+        }?.apply {
+            initViewModel(this)
+        }
+    }
+
+    private fun initViewModel(user: User){
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(UserDetailsViewModel::class.java)
         viewModel.getObservableUserData().observe(viewLifecycleOwner,
             Observer<User> { data ->
                 fillView(data)
             })
-        arguments?.getParcelable<User>(USER)?.also{
-            viewModel.loadData(it)
-        }
+        viewModel.loadData(user)
     }
 
     private fun fillView(user: User?){

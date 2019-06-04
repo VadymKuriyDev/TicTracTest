@@ -15,4 +15,6 @@ class UserDetailsViewModel @Inject constructor(): ViewModel() {
     }
 
     fun getObservableUserData(): LiveData<User> = userLiveData
+
+    fun getUserData(): User? = userLiveData.value
 }
