@@ -1,13 +1,15 @@
 package com.tictracapp.dagger
 
+import com.tictracapp.ui.fragment.MainFragment
 import dagger.Module
+import dagger.android.ContributesAndroidInjector
 
 @Module
 abstract class FragmentMainBuildersModule {
 
+    @ContributesAndroidInjector
+    internal abstract fun contributeBaseInjectableMainFragment(): MainFragment
+
 //    @ContributesAndroidInjector
-//    internal abstract fun contributeBaseInjectableMainFragment(): BaseInjectableMainFragment
-//
-//    @ContributesAndroidInjector
-//    internal abstract fun contributeMainFragment(): MainFragment
+//    internal abstract fun contributeDetailsFragment(): DetailsFragment
 }

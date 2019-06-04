@@ -1,5 +1,6 @@
 package com.tictracapp.ui
 
+import com.tictracapp.data.model.User
 import com.tictracapp.ui.fragment.MainFragment
 import com.tictracapp.ui.utils.FragmentUtils
 import com.tictracappTest.R
@@ -19,5 +20,9 @@ class NavigationController() {
         if (fragmentManager.findFragmentByTag(MainFragment::class.java.name) == null) {
             FragmentUtils.openContentFragment(fragmentManager, MainFragment.newInstance(), containerId, false, MainFragment::class.java.name, haveTransition = false)
         }
+    }
+
+    fun navigateToDetails(user: User){
+
     }
 }
