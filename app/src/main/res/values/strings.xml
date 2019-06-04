@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TictracApp</string>
+
+    <string name="server_url">https://media.tictrac.com</string>
+</resources>
