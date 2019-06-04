@@ -2,4 +2,7 @@
     <string name="app_name">TictracApp</string>
 
     <string name="server_url">https://media.tictrac.com</string>
+
+    <string name="email_chooser_title">"Send email using:</string>
+    <string name="default_email_subject">Hey! This test is going pretty well</string>
 </resources>

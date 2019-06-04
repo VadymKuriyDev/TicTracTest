@@ -1,6 +1,7 @@
 package com.tictracapp.ui
 
 import com.tictracapp.data.model.User
+import com.tictracapp.ui.fragment.DetailsFragment
 import com.tictracapp.ui.fragment.MainFragment
 import com.tictracapp.ui.utils.FragmentUtils
 import com.tictracappTest.R
@@ -23,6 +24,10 @@ class NavigationController() {
     }
 
     fun navigateToDetails(user: User){
+        FragmentUtils.openContentFragment(fragmentManager, DetailsFragment.newInstance(user), containerId, true, DetailsFragment::class.java.name, haveTransition = false)
+    }
 
+    fun navigateToGallery(url: String){
+//        FragmentUtils.openContentFragment(fragmentManager, DetailsFragment.newInstance(user), containerId, true, DetailsFragment::class.java.name, haveTransition = false)
     }
 }
