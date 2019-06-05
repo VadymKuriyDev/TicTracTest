@@ -14,6 +14,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import javax.inject.Singleton
+import androidx.room.Room
+import android.content.Context
+import com.tictracapp.data.AppDatabase
+import com.tictracapp.data.db.UserDao
+
 
 @Module(includes = [(ViewModelModule::class)])
 class AppModule {
@@ -42,4 +47,23 @@ class AppModule {
     fun provideCommonApiService(retrofit: Retrofit): CommonApiInterface {
         return retrofit.create(CommonApiInterface::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideDatabase(context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java, AppDatabase.DATABASE_NAME
+        ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideShowDao(appDb: AppDatabase): UserDao {
+        return appDb.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideContext(app: Application): Context = app.applicationContext
 }

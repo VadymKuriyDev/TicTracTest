@@ -1,17 +1,19 @@
 package com.tictracapp.data
 
 import com.tictracapp.api.response.UserApiEntity
-import com.tictracapp.data.model.User
+import com.tictracapp.data.db.UserEntity
 
 object UsersMapping {
 
-    fun fromApiToModel(usersApi: List<UserApiEntity>): List<User> {
-        return usersApi.map{ fromApiToModel(it) }
+    fun fromApiToModel(usersApi: List<UserApiEntity>): List<UserEntity> {
+        return usersApi.map { fromApiToModel(it) }
     }
 
-    private fun fromApiToModel(entity: UserApiEntity): User =
-        User(entity.profile_picture,
-            entity.email,
-            entity.name,
-            entity.infos)
+    private fun fromApiToModel(entity: UserApiEntity): UserEntity =
+        UserEntity(
+            profilePicture = entity.profile_picture,
+            email = entity.email,
+            name = entity.name,
+            phone = entity.infos
+        )
 }

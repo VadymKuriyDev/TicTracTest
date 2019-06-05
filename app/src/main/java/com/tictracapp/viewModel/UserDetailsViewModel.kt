@@ -1,20 +1,22 @@
 package com.tictracapp.viewModel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tictracapp.data.model.User
+import com.tictracapp.data.UsersRepository
+import com.tictracapp.data.model.UserDetailsData
 import javax.inject.Inject
 
-class UserDetailsViewModel @Inject constructor(): ViewModel() {
+class UserDetailsViewModel @Inject constructor(private val usersRepository: UsersRepository): ViewModel() {
 
-    private val userLiveData: MutableLiveData<User> = MutableLiveData()
-
-    fun loadData(user: User){
-        userLiveData.postValue(user)
+    var userId: Int = -1
+        set(value) {
+            if (field != value){
+                userLiveData = usersRepository.getUserDetails(value)
+            }
+            field = value
     }
 
-    fun getObservableUserData(): LiveData<User> = userLiveData
+    private lateinit var userLiveData: LiveData<UserDetailsData>
 
-    fun getUserData(): User? = userLiveData.value
+    fun getObservableUserData(): LiveData<UserDetailsData> = userLiveData
 }

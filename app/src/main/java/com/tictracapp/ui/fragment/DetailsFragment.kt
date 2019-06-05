@@ -10,9 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.tictracapp.dagger.Injectable
-import com.tictracapp.data.model.User
+import com.tictracapp.data.model.UserDetailsData
 import com.tictracapp.ui.NavigationController
 import com.tictracapp.utils.IntentUtils
 import com.tictracapp.viewModel.UserDetailsViewModel
@@ -40,31 +39,27 @@ class DetailsFragment : Fragment(), Injectable {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putParcelable(USER, viewModel.getUserData())
+        outState.putInt(USER_ID, viewModel.userId)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState != null) {
-            savedInstanceState.getParcelable<User>(USER)
-        } else {
-            arguments?.getParcelable(USER)
-        }?.apply {
+        (savedInstanceState?.getInt(USER_ID) ?: arguments?.getInt(USER_ID))?.apply {
             initViewModel(this)
         }
     }
 
-    private fun initViewModel(user: User){
+    private fun initViewModel(userId: Int){
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(UserDetailsViewModel::class.java)
+        viewModel.userId = userId
         viewModel.getObservableUserData().observe(viewLifecycleOwner,
-            Observer<User> { data ->
+            Observer<UserDetailsData> { data ->
                 fillView(data)
             })
-        viewModel.loadData(user)
     }
 
-    private fun fillView(user: User?){
+    private fun fillView(user: UserDetailsData?){
         user?.apply {
             binding.name.text = name
             binding.email.text = email
@@ -79,18 +74,18 @@ class DetailsFragment : Fragment(), Injectable {
                 IntentUtils.callToNumber(requireActivity(), phone)
             }
             binding.logo.setOnClickListener {
-                navigationMainController.navigateToGallery(profilePicture)
+                navigationMainController.navigateToGallery(viewModel.userId)
             }
         }
     }
 
     companion object {
 
-        private const val USER = "user"
+        private const val USER_ID = "user"
 
-        fun newInstance(user: User) = DetailsFragment().apply {
+        fun newInstance(userId: Int) = DetailsFragment().apply {
             arguments = Bundle().apply {
-                putParcelable(USER, user)
+                putInt(USER_ID, userId)
             }
         }
     }

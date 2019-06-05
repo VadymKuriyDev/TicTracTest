@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         if (savedInstanceState == null) {
             navigationMainController.navigateToMain()
         }
-        supportFragmentManager.addOnBackStackChangedListener { this.onBackStackChanged() }
+        supportFragmentManager.addOnBackStackChangedListener { invHomeBtn() }
+        invHomeBtn()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun onBackStackChanged() {
+    private fun invHomeBtn(){
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(supportFragmentManager.backStackEntryCount > 0)
             setHomeButtonEnabled(supportFragmentManager.backStackEntryCount > 0)

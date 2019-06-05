@@ -33,28 +33,28 @@ class ImagePreviewFragment : Fragment(), Injectable {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(LOGO, viewModel.getLogo())
+        outState.putInt(USER_ID, viewModel.userId)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         if (savedInstanceState != null) {
-            savedInstanceState.getString(LOGO)
+            savedInstanceState.getInt(USER_ID)
         } else {
-            arguments?.getString(LOGO)
+            arguments?.getInt(USER_ID)
         }?.apply {
             initViewModel(this)
         }
     }
 
-    private fun initViewModel(logo: String){
+    private fun initViewModel(userId: Int){
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(ImagePreviewViewModel::class.java)
-        viewModel.getObservableUserData().observe(viewLifecycleOwner,
+        viewModel.userId = userId
+        viewModel.getObservableUserLogo().observe(viewLifecycleOwner,
             Observer<String> { data ->
                 fillView(data)
             })
-        viewModel.loadData(logo)
     }
 
     private fun fillView(logo: String?){
@@ -67,11 +67,11 @@ class ImagePreviewFragment : Fragment(), Injectable {
 
     companion object {
 
-        private const val LOGO = "logo"
+        private const val USER_ID = "user_id"
 
-        fun newInstance(logo: String) = ImagePreviewFragment().apply {
+        fun newInstance(userId: Int) = ImagePreviewFragment().apply {
             arguments = Bundle().apply {
-                putString(LOGO, logo)
+                putInt(USER_ID, userId)
             }
         }
     }

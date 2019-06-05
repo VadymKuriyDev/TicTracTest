@@ -1,31 +1,25 @@
 package com.tictracapp.viewModel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tictracapp.data.UsersRepository
-import com.tictracapp.data.model.User
+import com.tictracapp.data.model.UserListItemData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val usersRepository: UsersRepository) : ViewModel() {
+class MainViewModel @Inject constructor(usersRepository: UsersRepository) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-    private val usersLiveData: MutableLiveData<List<User>> = MutableLiveData()
+    private val usersLiveData: LiveData<List<UserListItemData>> = usersRepository.getUsers()
 
     init {
-        loadData()
-    }
-
-    private fun loadData(){
         compositeDisposable.add(
             usersRepository.loadUsers()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ items ->
-                    Timber.d("Loaded ${items.size} users")
-                    usersLiveData.value = items
+                .subscribe({
+                    Timber.d("New data loaded")
                 }, { throwable ->
                     Timber.e("Load error ${throwable.message} ")
                 })
@@ -33,8 +27,10 @@ class MainViewModel @Inject constructor(private val usersRepository: UsersReposi
     }
 
     override fun onCleared() {
-        compositeDisposable.clear()
+        if (!compositeDisposable.isDisposed) {
+            compositeDisposable.clear()
+        }
     }
 
-    fun getObservableUsersData(): LiveData<List<User>> = usersLiveData
+    fun getObservableUsersData(): LiveData<List<UserListItemData>> = usersLiveData
 }

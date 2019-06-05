@@ -1,38 +1,15 @@
 package com.tictracapp.data.model
 
-import android.os.Parcel
-import android.os.Parcelable
+data class UserDetailsData(
+    val id: Int,
+    val profilePicture: String,
+    val email: String,
+    val name: String,
+    val phone: String
+)
 
-data class User(val profilePicture: String,
-                val email:String,
-                val name:String,
-                val phone:String) : Parcelable {
-
-    constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString()!!
-    )
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(profilePicture)
-        parcel.writeString(email)
-        parcel.writeString(name)
-        parcel.writeString(phone)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<User> {
-        override fun createFromParcel(parcel: Parcel): User {
-            return User(parcel)
-        }
-
-        override fun newArray(size: Int): Array<User?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+data class UserListItemData(
+    val id: Int,
+    val name: String,
+    val profilePicture: String
+)

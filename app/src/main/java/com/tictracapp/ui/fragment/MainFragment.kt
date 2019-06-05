@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.tictracapp.dagger.Injectable
-import com.tictracapp.data.model.User
+import com.tictracapp.data.model.UserListItemData
 import com.tictracapp.ui.NavigationController
 import com.tictracapp.ui.adapter.UsersAdapter
 import com.tictracapp.ui.adapter.UsersListener
@@ -52,16 +52,16 @@ class MainFragment : Fragment(), UsersListener, Injectable{
         viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(MainViewModel::class.java)
         viewModel.getObservableUsersData().observe(viewLifecycleOwner,
-            Observer<List<User>> { data ->
+            Observer<List<UserListItemData>> { data ->
                 data?.let {
                     (binding.list.adapter as UsersAdapter).updateData(it)
                 }
             })
     }
 
-    override fun userSelected(user: User) {
-        Timber.d("User selected ${user.name}")
-        navigationMainController.navigateToDetails(user)
+    override fun userSelected(user: UserListItemData) {
+        Timber.d("User selected ${user.name} with id ${user.id}")
+        navigationMainController.navigateToDetails(user.id)
     }
 
     companion object {

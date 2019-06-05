@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.tictracapp.data.model.User
+import com.tictracapp.data.model.UserListItemData
 import com.tictracappTest.R
 import kotlinx.android.synthetic.main.user_item.view.*
 
 class UsersAdapter(private val listener: UsersListener,
-                   private var items: List<User> = emptyList()) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+                   private var items: List<UserListItemData> = emptyList()) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -25,7 +25,7 @@ class UsersAdapter(private val listener: UsersListener,
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: User) {
+        fun bind(item: UserListItemData) {
             with(itemView) {
                 user_name.text = item.name
                 Glide.with(context)
@@ -38,12 +38,12 @@ class UsersAdapter(private val listener: UsersListener,
     }
 
     //TODO need implement Diff or sorted list for user for better updates
-    fun updateData(users: List<User>){
+    fun updateData(users: List<UserListItemData>){
         items = users
         notifyDataSetChanged()
     }
 }
 
 interface UsersListener{
-    fun userSelected(user: User)
+    fun userSelected(user: UserListItemData)
 }
